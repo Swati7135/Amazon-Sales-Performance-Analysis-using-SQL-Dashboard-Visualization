@@ -1,8 +1,8 @@
 # Amazon Sales Performance Analysis using SQL & Dashboard Visualization
 
-This project demonstrates an end-to-end sales analytics workflow using SQL-based business analysis and interactive dashboard visualization on Amazon-style e-commerce sales data.
+This project demonstrates an end-to-end sales analytics workflow using SQL-based business analysis and interactive dashboard visualization on Amazon e-commerce sales data.
+The focus of this project is on analytical thinking, business problem-solving, and structured data analysis, with dashboard visualization used to communicate insights.
 
-The focus of this project is on analytical thinking, business problem-solving, and structured data analysis rather than just dashboard creation.
 
 
 ## 📌 Project Objective
