@@ -62,8 +62,7 @@ The dashboard dynamically loads data from a JSON file generated from the dataset
 
 
 ## Use Case
-This project can be used as a portfolio case study for Data Analyst roles and demonstrates practical skills in SQL-based analysis, business insight generation, and data visualization.
-
+This project simulates a real-world sales performance analysis scenario where SQL is used to answer business questions related to revenue, customer behavior, product performance, and operational efficiency. It demonstrates how data analysts support business stakeholders by transforming raw transactional data into actionable insights through structured queries and dashboards.
 
 ## Author
 **Swati Singh**   
