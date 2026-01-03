@@ -51,7 +51,10 @@ To analyze sales performance and customer behavior by:
 - Discounted orders contribute strongly to total revenue, indicating price sensitivity
 
 ## Dashboard
-An interactive dashboard was created using HTML, JavaScript, and Plotly.js to visualize:
+## Dashboard
+
+An interactive dashboard was developed to communicate analytical insights derived from SQL queries. The dashboard focuses on presenting key business metrics and trends in a clear and intuitive manner.
+Plotly.js was used for data visualization, with lightweight HTML and JavaScript utilized only to structure the dashboard and enable data loading.
 
 - Key KPIs (Total Revenue, Total Orders, Average Order Value)
 - Revenue trends over time
