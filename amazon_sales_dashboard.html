@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Amazon Sales Performance Dashboard</title>
+
+  <!-- Plotly.js CDN -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    /* 🔥 MAIN CONTAINER – prevents stretch */
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .upload-box {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .kpi-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .kpi {
+      background: white;
+      padding: 12px;
+      width: 220px;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .kpi h3 {
+      margin: 0;
+      font-size: 13px;
+      color: #555;
+    }
+
+    .kpi p {
+      margin-top: 6px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .chart {
+      background: white;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Amazon Sales Performance Dashboard</h1>
+
+<div class="upload-box">
+  <input type="file" id="fileInput" accept=".json">
+</div>
+
+<div class="kpi-container">
+  <div class="kpi">
+    <h3>Total Revenue</h3>
+    <p id="totalRevenue">—</p>
+  </div>
+  <div class="kpi">
+    <h3>Total Orders</h3>
+    <p id="totalOrders">—</p>
+  </div>
+  <div class="kpi">
+    <h3>Average Order Value</h3>
+    <p id="aov">—</p>
+  </div>
+</div>
+
+<div id="monthlyRevenue" class="chart"></div>
+<div id="categoryRevenue" class="chart"></div>
+<div id="orderStatus" class="chart"></div>
+<div id="paymentMethod" class="chart"></div>
+
+</div>
+
+<script>
+document.getElementById("fileInput").addEventListener("change", handleFile);
+
+function handleFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const data = JSON.parse(e.target.result);
+    generateDashboard(data);
+  };
+  reader.readAsText(file);
+}
+
+function generateDashboard(data) {
+
+  const totalOrders = data.length;
+  const totalRevenue = data.reduce((sum, d) => sum + Number(d.Total_Amount), 0);
+  const aov = totalRevenue / totalOrders;
+
+  document.getElementById("totalOrders").innerText = totalOrders.toLocaleString();
+  document.getElementById("totalRevenue").innerText = "₹ " + totalRevenue.toFixed(2);
+  document.getElementById("aov").innerText = "₹ " + aov.toFixed(2);
+
+  /* Monthly Revenue */
+  const monthlyRevenue = {};
+  data.forEach(d => {
+    const month = d.Order_Date.slice(3,10);
+    monthlyRevenue[month] = (monthlyRevenue[month] || 0) + Number(d.Total_Amount);
+  });
+
+  Plotly.newPlot("monthlyRevenue", [{
+    x: Object.keys(monthlyRevenue),
+    y: Object.values(monthlyRevenue),
+    type: "scatter",
+    mode: "lines+markers"
+  }], {
+    title: "Monthly Revenue Trend",
+    height: 350,
+    margin: { t: 50, l: 50, r: 30, b: 80 }
+  }, {responsive: true});
+
+  /* Category Revenue */
+  const categoryRevenue = {};
+  data.forEach(d => {
+    categoryRevenue[d.Category] = (categoryRevenue[d.Category] || 0) + Number(d.Total_Amount);
+  });
+
+  Plotly.newPlot("categoryRevenue", [{
+    x: Object.values(categoryRevenue),
+    y: Object.keys(categoryRevenue),
+    type: "bar",
+    orientation: "h"
+  }], {
+    title: "Revenue by Category",
+    height: 300,
+    margin: { t: 50, l: 120, r: 30, b: 40 }
+  }, {responsive: true});
+
+  /* Order Status */
+  const orderStatus = {};
+  data.forEach(d => {
+    orderStatus[d.Order_Status] = (orderStatus[d.Order_Status] || 0) + 1;
+  });
+
+  Plotly.newPlot("orderStatus", [{
+    labels: Object.keys(orderStatus),
+    values: Object.values(orderStatus),
+    type: "pie",
+    hole: 0.5
+  }], {
+    title: "Order Status Distribution",
+    height: 300
+  }, {responsive: true});
+
+  /* Payment Method */
+  const paymentRevenue = {};
+  data.forEach(d => {
+    paymentRevenue[d.Payment_Method] = (paymentRevenue[d.Payment_Method] || 0) + Number(d.Total_Amount);
+  });
+
+  Plotly.newPlot("paymentMethod", [{
+    x: Object.keys(paymentRevenue),
+    y: Object.values(paymentRevenue),
+    type: "bar"
+  }], {
+    title: "Revenue by Payment Method",
+    height: 300,
+    margin: { t: 50, l: 50, r: 30, b: 80 }
+  }, {responsive: true});
+}
+</script>
+
+</body>
+</html>
