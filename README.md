@@ -61,7 +61,15 @@ Plotly.js was used for data visualization, with lightweight HTML and JavaScript 
 - Category-wise and product-wise sales performance
 - Payment method and order status distribution
 
-The dashboard dynamically loads data from a JSON file generated from the dataset.
+## ▶️ How to Run the Dashboard
+
+- Download amazon_sales_dashboard.html
+
+- Open it in any modern web browser (Chrome recommended)
+
+- Upload the Amazon_sales.json file when prompted
+
+- Dashboard will render automatically
 
 
 ## Use Case
