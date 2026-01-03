@@ -50,7 +50,7 @@ To analyze sales performance and customer behavior by:
 - Digital payment methods such as Credit Card and UPI dominate overall transactions
 - Discounted orders contribute strongly to total revenue, indicating price sensitivity
 
-## Dashboard
+
 ## Dashboard
 
 An interactive dashboard was developed to communicate analytical insights derived from SQL queries. The dashboard focuses on presenting key business metrics and trends in a clear and intuitive manner.
@@ -67,7 +67,7 @@ Plotly.js was used for data visualization, with lightweight HTML and JavaScript 
 
 - Open it in any modern web browser (Chrome recommended)
 
-- Upload the Amazon_sales.json file when prompted
+- Upload the Amazon_sales_sample.json file when prompted
 
 - Dashboard will render automatically
 
